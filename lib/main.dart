@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-  title: 'Leaf Disease Detection',
+      title: 'Leaf Disease Detection',
       theme: ThemeData(
         primarySwatch: Colors.green,
         accentColor: Colors.green,

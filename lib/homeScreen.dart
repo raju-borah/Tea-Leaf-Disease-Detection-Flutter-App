@@ -1,20 +1,12 @@
+import 'package:LDDTest/image_input.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-void myfun() async {
-  // This example uses the Google Books API to search for books about http.
-  // https://developers.google.com/books/docs/overview
-  var url = 'https://jsonplaceholder.typicode.com/todos/1';
-  // Await the http get response, then decode the json-formatted response.
-  var response = await http.get(url);
-  print(response.body);
-}
 
 // void selectCategory(BuildContext ctx) {
 //   Navigator.of(ctx).pushNamed(
 //     CategoryMealsScreen.routeName
 //   );
 // }
+
 // clippath
 class CustomClipPath extends CustomClipper<Path> {
   var radius = 10.0;
@@ -43,6 +35,11 @@ class HomeScreen extends StatelessWidget {
           title: const Text('Leaf Disease Detection'),
         ),
         body: Container(
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //     image: AssetImage("assets/images/bg.jpg"),
+          //   ),
+          // ),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -61,14 +58,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               )),
               Image.asset('./assets/images/leaf.png'),
-              Container(
-                child: FloatingActionButton(
-                  child: Icon(Icons.camera_alt),
-                  // Provide an onPressed callback.
-                  onPressed: myfun,
-                ),
-                margin: new EdgeInsets.symmetric(vertical: 20.0),
-              ),
+              ImageInput(),
             ],
           ),
         ));
