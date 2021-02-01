@@ -57,7 +57,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               )),
-              Image.asset('./assets/images/leaf.png'),
               ImageInput(),
             ],
           ),

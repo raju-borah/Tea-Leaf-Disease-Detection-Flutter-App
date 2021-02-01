@@ -53,52 +53,82 @@ class _ImageInputState extends State<ImageInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Padding(padding: const EdgeInsets.all(25.0)),
-        Container(
-          width: 150,
-          height: 100,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
-          ),
-          child: _storedImage != null
-              ? Image.file(
-                  _storedImage,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                )
-              : Text(
-                  'No Image Taken',
-                  textAlign: TextAlign.center,
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(width: 1, color: Colors.grey),
                 ),
-          alignment: Alignment.center,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: FlatButton.icon(
-            icon: Icon(Icons.camera),
-            label: Text('Take Picture'),
-            textColor: Theme.of(context).primaryColor,
-            onPressed: _takePicture,
+                child: _storedImage != null
+                    ? ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                        child: Image.file(
+                        _storedImage,
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: 200,
+                      ))
+                    : Image.asset('./assets/images/leaf.png'),
+
+                // Text(
+                //     'No Image Taken',
+                //     textAlign: TextAlign.center,
+                //   )
+                // ,
+                alignment: Alignment.center,
+              ),
+            ],
           ),
-        ),
-        if (_storedImage != null)
-          Container(
-            child: FloatingActionButton(
-              child: Icon(Icons.text_fields),
-              // Provide an onPressed callback.
-              onPressed: () {
-                // myfun(_storedImage);
-                Service service = Service();
-                service.uploadImage(_storedImage);
-              },
-            ),
-            margin: new EdgeInsets.symmetric(vertical: 20.0),
+          Column(
+            children: <Widget>[
+              Container(
+                child: FlatButton.icon(
+                  icon: Icon(Icons.camera),
+                  label: Text('Take Picture'),
+                  textColor: Theme.of(context).primaryColor,
+                  onPressed: _takePicture,
+                ),
+              ),
+            ],
           ),
-      ],
+          Column(
+            children: [
+              if (_storedImage != null)
+                Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        textColor: Theme.of(context).primaryColor,
+                        child: Text(
+                          "Check for Disease",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+
+                        // Provide an onPressed callback.
+                        onPressed: () {
+                          Service service = Service();
+                          service.uploadImage(_storedImage);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
