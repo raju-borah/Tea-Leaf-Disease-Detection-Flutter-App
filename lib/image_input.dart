@@ -35,6 +35,7 @@ class Service {
   }
 }
 
+// for image  picker
 class _ImageInputState extends State<ImageInput> {
   File _storedImage;
 
@@ -102,18 +103,19 @@ class _ImageInputState extends State<ImageInput> {
             children: [
               if (_storedImage != null)
                 Padding(
-                  padding: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        textColor: Theme.of(context).primaryColor,
+                        textColor: Theme.of(context).primaryColorLight,
+                        color: Theme.of(context).primaryColorDark,
                         child: Text(
                           "Check for Disease",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 25,),
                         ),
 
                         // Provide an onPressed callback.
