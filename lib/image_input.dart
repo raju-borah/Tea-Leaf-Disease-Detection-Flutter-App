@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:LDDTest/screens/resultScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,7 +22,7 @@ void myfun(photo) async {
 
 // class to upload image
 class Service {
-  Future<String> uploadImage(File file) async {
+  void uploadImage(File file) async {
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -31,6 +32,7 @@ class Service {
         "http://ec2-3-236-82-128.compute-1.amazonaws.com:8000/uploadfile/",
         data: formData);
     print(response.data);
+
     return response.data;
   }
 }
@@ -40,6 +42,7 @@ class _ImageInputState extends State<ImageInput> {
   File _storedImage;
 
   Future<void> _takePicture() async {
+    // ignore: deprecated_member_use
     final imageFile = await ImagePicker.pickImage(
       source: ImageSource.camera,
       maxWidth: 200,
@@ -61,22 +64,57 @@ class _ImageInputState extends State<ImageInput> {
           Column(
             children: <Widget>[
               Container(
-                width: 200,
-                height: 200,
+                margin: EdgeInsets.symmetric(vertical: 30),
+                width: 250,
+                height: 250,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: _storedImage != null
-                    ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                        child: Image.file(
-                        _storedImage,
-                        fit: BoxFit.cover,
-                        height: 200,
-                        width: 200,
-                      ))
-                    : Image.asset('./assets/images/leaf.png'),
+                    ? Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 50,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.23),
+                              spreadRadius: 10.0,
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.file(
+                            _storedImage,
+                            fit: BoxFit.cover,
+                            height: 250,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 50,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.23),
+                              spreadRadius: 10.0,
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            './assets/images/tea.png',
+                            fit: BoxFit.cover,
+                            height: 250,
+                          ),
+                        ),
+                      ),
 
                 // Text(
                 //     'No Image Taken',
@@ -92,7 +130,13 @@ class _ImageInputState extends State<ImageInput> {
               Container(
                 child: FlatButton.icon(
                   icon: Icon(Icons.camera),
-                  label: Text('Take Picture'),
+                  label: Text(
+                    'Take Picture',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
                   textColor: Theme.of(context).primaryColor,
                   onPressed: _takePicture,
                 ),
@@ -115,13 +159,19 @@ class _ImageInputState extends State<ImageInput> {
                         child: Text(
                           "Check for Disease",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25,),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
                         ),
 
                         // Provide an onPressed callback.
                         onPressed: () {
-                          Service service = Service();
-                          service.uploadImage(_storedImage);
+                          Navigator.of(context)
+                              .pushNamed(ResultScreen.routeName, arguments: {
+                            'image': _storedImage,
+                          });
+                          // Service service = Service();
+                          // service.uploadImage(_storedImage);
                         },
                       )
                     ],

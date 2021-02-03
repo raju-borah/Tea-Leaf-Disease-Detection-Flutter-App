@@ -1,4 +1,6 @@
+import 'package:LDDTest/screens/ImageScreen.dart';
 import 'package:LDDTest/screens/homeScreen.dart';
+import 'package:LDDTest/screens/resultScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Leaf Disease Detection',
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -33,10 +36,13 @@ class MyApp extends StatelessWidget {
               fontFamily: 'RobotoCondensed',
               fontWeight: FontWeight.bold,
             )),
+            visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       initialRoute: '/', // default is '/'
       routes: {
         '/': (ctx) => HomeScreen(),
+        ResultScreen.routeName: (ctx) => ResultScreen(),
+        ImageScreen.routeName: (ctx) => ImageScreen(),
       },
     );
   }

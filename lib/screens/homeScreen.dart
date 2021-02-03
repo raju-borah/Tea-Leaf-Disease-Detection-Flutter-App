@@ -1,11 +1,5 @@
-import 'package:LDDTest/image_input.dart';
+import 'package:LDDTest/screens/ImageScreen.dart';
 import 'package:flutter/material.dart';
-
-// void selectCategory(BuildContext ctx) {
-//   Navigator.of(ctx).pushNamed(
-//     CategoryMealsScreen.routeName
-//   );
-// }
 
 // clippath
 class CustomClipPath extends CustomClipper<Path> {
@@ -19,7 +13,6 @@ class CustomClipPath extends CustomClipper<Path> {
     path.quadraticBezierTo(
         3 / 4 * size.width, size.height, size.width, size.height - 30);
     path.lineTo(size.width, 0);
-
     return path;
   }
 
@@ -31,35 +24,66 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Leaf Disease Detection'),
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Leaf Disease Detection'),
+        // ),
         body: Container(
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage("assets/images/bg.jpg"),
-          //   ),
-          // ),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ClipPath(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 180,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    clipper: CustomClipPath(),
+      // decoration: BoxDecoration(
+      //   image: DecorationImage(
+      //     image: AssetImage("assets/images/bg.jpg"),
+      //   ),
+      // ),
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+              child: Stack(children: <Widget>[
+            Container(
+              height: 200,
+              padding: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(36),
+                    bottomRight: Radius.circular(36),
                   ),
-                ),
-              )),
-              ImageInput(),
-            ],
-          ),
-        ));
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 50,
+                      color: Theme.of(context).primaryColor.withOpacity(0.23),
+                    ),
+                  ]),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      'Leaf Disease',
+                      style: Theme.of(context).textTheme.headline5.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Spacer(),
+                  Image.asset(
+                    "assets/images/leaf.png",
+                    height: 70,
+                  )
+                ],
+              ),
+            ),
+          ])),
+          RaisedButton(
+              textColor: Colors.white,
+              color: Colors.green,
+              padding: const EdgeInsets.all(8.0),
+              child: new Text(
+                "Go",
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(ImageScreen.routeName);
+              })
+        ],
+      ),
+    ));
   }
 }
