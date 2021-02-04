@@ -72,16 +72,33 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ])),
-          RaisedButton(
-              textColor: Colors.white,
-              color: Colors.green,
-              padding: const EdgeInsets.all(8.0),
-              child: new Text(
-                "Go",
+          Expanded(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: MaterialButton(
+                padding: EdgeInsets.all(20),
+                minWidth: double.infinity,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                textColor: Colors.white,
+                color: Colors.green,
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ImageScreen.routeName);
+                },
+                child: Text(
+                  "Check Now",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(ImageScreen.routeName);
-              })
+            ),
+          ),
         ],
       ),
     ));

@@ -4,8 +4,8 @@ import 'package:LDDTest/screens/resultScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart' as syspaths;
+// import 'package:path/path.dart' as path;
+// import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
   @override
@@ -50,137 +50,139 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       _storedImage = imageFile;
     });
-    final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.path);
-    final savedImage = await imageFile.copy('${appDir.path}/$fileName');
+    // final appDir = await syspaths.getApplicationDocumentsDirectory();
+    // final fileName = path.basename(imageFile.path);
+    // final savedImage = await imageFile.copy('${appDir.path}/$fileName');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    Size size = MediaQuery.of(context).size;
+    return Stack(children: [
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 30),
-                width: 250,
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: _storedImage != null
-                    ? Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 10),
-                              blurRadius: 50,
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.23),
-                              spreadRadius: 10.0,
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            _storedImage,
-                            fit: BoxFit.cover,
-                            height: 250,
+          Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: _storedImage != null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.23),
+                            spreadRadius: 10.0,
                           ),
-                        ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 10),
-                              blurRadius: 50,
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.23),
-                              spreadRadius: 10.0,
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            './assets/images/tea.png',
-                            fit: BoxFit.cover,
-                            height: 250,
-                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(150),
+                        child: Image.file(
+                          _storedImage,
+                          fit: BoxFit.cover,
+                          height: 350,
+                          width: 350,
                         ),
                       ),
-
-                // Text(
-                //     'No Image Taken',
-                //     textAlign: TextAlign.center,
-                //   )
-                // ,
-                alignment: Alignment.center,
-              ),
-            ],
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.23),
+                            spreadRadius: 10.0,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(150),
+                        child: Image.asset(
+                          './assets/images/tea.png',
+                          fit: BoxFit.cover,
+                          height: 350,
+                          width: 350,
+                        ),
+                      ),
+                    ),
+            ),
           ),
-          Column(
-            children: <Widget>[
-              Container(
-                child: FlatButton.icon(
+        ],
+      ),
+      Container(
+        child: Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: Row(
+            children: [
+              if (_storedImage == null)
+                FlatButton.icon(
+                  minWidth: size.width,
                   icon: Icon(Icons.camera),
                   label: Text(
-                    'Take Picture',
+                    'Open Camera',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 22,
+                    ),
+                  ),
+                  textColor: Theme.of(context).primaryColor,
+                  onPressed: _takePicture,
+                )
+              else
+                FlatButton.icon(
+                  minWidth: size.width / 2,
+                  icon: Icon(Icons.camera),
+                  label: Text(
+                    'Open Camera',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
                     ),
                   ),
                   textColor: Theme.of(context).primaryColor,
                   onPressed: _takePicture,
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
               if (_storedImage != null)
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        textColor: Theme.of(context).primaryColorLight,
-                        color: Theme.of(context).primaryColorDark,
-                        child: Text(
-                          "Check for Disease",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        ),
-
-                        // Provide an onPressed callback.
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(ResultScreen.routeName, arguments: {
-                            'image': _storedImage,
-                          });
-                          // Service service = Service();
-                          // service.uploadImage(_storedImage);
-                        },
-                      )
-                    ],
+                MaterialButton(
+                  padding: EdgeInsets.all(10),
+                  minWidth: size.width / 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(10),
+                    ),
+                  ),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(ResultScreen.routeName, arguments: {
+                      'image': _storedImage,
+                    });
+                  },
+                  child: Text(
+                    "Check Now",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
-    );
+    ]);
   }
 }

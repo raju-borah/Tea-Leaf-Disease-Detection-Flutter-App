@@ -40,15 +40,26 @@ class ImageScreen extends StatelessWidget {
             clipper: CustomClipPath(),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
-          child: Text(
-            "Leaf Disease Detection",
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+        Row(
+          children: [
+            IconButton(
+              color: Theme.of(context).primaryColorLight,
+              icon: Icon(Icons.arrow_back_rounded),
+              onPressed: () {
+                 Navigator.of(context).pushNamed('/');
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
+              child: Text(
+                "Leaf Disease Detection",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
         ),
         Center(
           child: ImageInput(),
