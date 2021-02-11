@@ -1,6 +1,8 @@
+import 'package:LDDTest/components/barChartOne.dart';
 import 'package:LDDTest/screens/ImageScreen.dart';
 import 'package:LDDTest/screens/homeScreen.dart';
 import 'package:LDDTest/screens/resultScreen.dart';
+import 'package:LDDTest/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,11 +18,14 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    // full screen
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      
       title: 'Leaf Disease Detection',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch:Colors.green,
         accentColor: Colors.green,
         // canvasColor: Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
@@ -36,13 +41,17 @@ class MyApp extends StatelessWidget {
               fontFamily: 'RobotoCondensed',
               fontWeight: FontWeight.bold,
             )),
-            visualDensity: VisualDensity.adaptivePlatformDensity
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            
       ),
-      initialRoute: '/', // default is '/'
+      
+      initialRoute: 'splash-screen', // default is '/'
       routes: {
+        'splash-screen':(ctx)=>SplashScreenPage(),
         '/': (ctx) => HomeScreen(),
         ResultScreen.routeName: (ctx) => ResultScreen(),
         ImageScreen.routeName: (ctx) => ImageScreen(),
+        ChartsDemo.routeName: (ctx) => ChartsDemo(),
       },
     );
   }

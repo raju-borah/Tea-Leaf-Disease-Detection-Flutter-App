@@ -1,25 +1,6 @@
+import 'package:LDDTest/components/customClipPathComponent.dart';
 import 'package:LDDTest/image_input.dart';
 import 'package:flutter/material.dart';
-
-// clippath
-class CustomClipPath extends CustomClipper<Path> {
-  var radius = 10.0;
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(
-        size.width / 4, size.height - 50, size.width / 2, size.height - 20);
-    path.quadraticBezierTo(
-        3 / 4 * size.width, size.height, size.width, size.height - 30);
-    path.lineTo(size.width, 0);
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 class ImageScreen extends StatelessWidget {
   static const routeName = '/image-screen';
@@ -29,25 +10,18 @@ class ImageScreen extends StatelessWidget {
     return Scaffold(
         body: Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: ClipPath(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 380,
-              color: Theme.of(context).primaryColor,
-            ),
-            clipper: CustomClipPath(),
-          ),
-        ),
+        CustomClipPathComponent(),
         Row(
           children: [
-            IconButton(
-              color: Theme.of(context).primaryColorLight,
-              icon: Icon(Icons.arrow_back_rounded),
-              onPressed: () {
-                 Navigator.of(context).pushNamed('/');
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 10),
+              child: IconButton(
+                color: Theme.of(context).primaryColorLight,
+                icon: Icon(Icons.arrow_back_rounded),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/');
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
@@ -63,11 +37,19 @@ class ImageScreen extends StatelessWidget {
         ),
         Center(
           child: ImageInput(),
-          // ],
-          // ),
         )
       ],
     )
+        //  Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       SizedBox(height: 52.0),
+        //       FadingText('Checking Your Leaf sample...',
+        //           style: TextStyle(
+        //             fontWeight: FontWeight.bold,
+        //             fontSize: 25,
+        //           )),
+        //     ])
         // Container(
         // decoration: BoxDecoration(
         //   image: DecorationImage(
