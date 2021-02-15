@@ -7,7 +7,7 @@ class SplashScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 5,
+      seconds: 2,
       navigateAfterSeconds: HomeScreen(),
       title: new Text(
         'Welcome To Tea Leaf Disease Detector',

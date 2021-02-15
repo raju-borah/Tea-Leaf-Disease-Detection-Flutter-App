@@ -1,4 +1,5 @@
 import 'package:LDDTest/components/customClipPathComponent.dart';
+import 'package:LDDTest/components/topBar.dart';
 import 'package:LDDTest/image_input.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class ImageScreen extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
               child: IconButton(
                 color: Theme.of(context).primaryColorLight,
                 icon: Icon(Icons.arrow_back_rounded),
@@ -23,18 +24,9 @@ class ImageScreen extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
-              child: Text(
-                "Leaf Disease Detection",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
           ],
         ),
+        TopBar(),
         Center(
           child: ImageInput(),
         )

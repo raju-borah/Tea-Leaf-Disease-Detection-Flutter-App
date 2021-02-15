@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:LDDTest/screens/resultScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'ProgressHUD.dart';
 // import 'package:path/path.dart' as path;
 // import 'package:path_provider/path_provider.dart' as syspaths;
 
@@ -12,34 +15,30 @@ class ImageInput extends StatefulWidget {
   _ImageInputState createState() => _ImageInputState();
 }
 
-void myfun(photo) async {
-  // // This example uses the Google Books API to search for books about http.
-  // // https://developers.google.com/books/docs/overview
-  // var url = 'http://ec2-3-234-209-184.compute-1.amazonaws.com:8000/docs#/default/create_upload_file_uploadfile__post';
-  // // Await the http get response, then decode the json-formatted response.
-  // var response = await http.get(url);
-}
+// for image  picker
+class _ImageInputState extends State<ImageInput> {
+  File _storedImage;
+  Map _result;
+  bool isApiCallProcess = false;
+  _ImageInputState imageInputState;
 
-// class to upload image
-class Service {
-  void uploadImage(File file) async {
+  Future uploadImage(File file) async {
+    print("Started..");
+      setState(() {
+      isApiCallProcess = true;
+    });
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(file.path, filename: fileName),
     });
     var dio = Dio();
     Response response = await dio.post(
-        "http://ec2-3-236-82-128.compute-1.amazonaws.com:8000/uploadfile/",
+        "http://ec2-18-234-246-77.compute-1.amazonaws.com:8080/uploadfile/",
         data: formData);
-    print(response.data);
-
+    // print(response.data);
+    _result = response.data;
     return response.data;
   }
-}
-
-// for image  picker
-class _ImageInputState extends State<ImageInput> {
-  File _storedImage;
 
   Future<void> _takePicture() async {
     // ignore: deprecated_member_use
@@ -56,7 +55,25 @@ class _ImageInputState extends State<ImageInput> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    imageInputState = new _ImageInputState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ProgressHUD(
+          child: _uiSetup(context),
+          inAsyncCall: isApiCallProcess,
+          opacity: 0.3,
+        )
+      ],
+    );
+  }
+
+  Widget _uiSetup(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Stack(children: [
       Column(
@@ -126,18 +143,21 @@ class _ImageInputState extends State<ImageInput> {
           child: Row(
             children: [
               if (_storedImage == null)
-                FlatButton.icon(
-                  minWidth: size.width,
-                  icon: Icon(Icons.camera),
-                  label: Text(
-                    'Open Camera',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical:10.0),
+                  child: FlatButton.icon(
+                    minWidth: size.width,
+                    icon: Icon(Icons.camera_alt_rounded),
+                    label: Text(
+                      'Open Camera',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                      ),
                     ),
+                    textColor: Theme.of(context).primaryColor,
+                    onPressed: _takePicture,
                   ),
-                  textColor: Theme.of(context).primaryColor,
-                  onPressed: _takePicture,
                 )
               else
                 FlatButton.icon(
@@ -166,9 +186,24 @@ class _ImageInputState extends State<ImageInput> {
                   textColor: Colors.white,
                   color: Colors.green,
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(ResultScreen.routeName, arguments: {
-                      'image': _storedImage,
+                    uploadImage(_storedImage).then((value) {
+                      setState(() {
+                        isApiCallProcess = false;
+                      });
+                      if (_result != null) {
+                        setState(() {
+                          isApiCallProcess = false;
+                        });
+
+                        // print(_result.values.toList());
+                        Navigator.of(context)
+                            .pushNamed(ResultScreen.routeName, arguments: {
+                          'image': _storedImage,
+                          'detection_scores': _result.values.toList()[0],
+                          'detection_boxes': _result.values.toList()[1],
+                        });
+                        print('Done ...');
+                      }
                     });
                   },
                   child: Text(

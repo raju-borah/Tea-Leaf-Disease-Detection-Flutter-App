@@ -3,6 +3,7 @@ import 'package:LDDTest/screens/ImageScreen.dart';
 import 'package:LDDTest/screens/homeScreen.dart';
 import 'package:LDDTest/screens/resultScreen.dart';
 import 'package:LDDTest/screens/splashScreen.dart';
+import 'package:LDDTest/screens/testScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         ResultScreen.routeName: (ctx) => ResultScreen(),
         ImageScreen.routeName: (ctx) => ImageScreen(),
         ChartsDemo.routeName: (ctx) => ChartsDemo(),
+        // TestScreen.routeName: (ctx) => TestScreen(),
       },
     );
   }

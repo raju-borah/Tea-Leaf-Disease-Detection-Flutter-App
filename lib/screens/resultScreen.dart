@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:LDDTest/components/barChartOne.dart';
 import 'package:LDDTest/components/customClipPathComponent.dart';
+import 'package:LDDTest/components/topBar.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -9,9 +12,12 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, Object>;
+    final routeArgs = ModalRoute.of(context).settings.arguments as Map;
     final imageData = routeArgs['image'];
+    final detectionScores = routeArgs['detection_scores'];
+    final detectionBoxes = routeArgs['detection_boxes'];
+    print("This is result data");
+    print(detectionScores);
     return Scaffold(
         // appBar: AppBar(
         //   title: const Text('Result'),
@@ -22,7 +28,7 @@ class ResultScreen extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
               child: IconButton(
                 color: Theme.of(context).primaryColorLight,
                 icon: Icon(Icons.arrow_back_rounded),
@@ -31,18 +37,9 @@ class ResultScreen extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
-              child: Text(
-                "Leaf Test Result",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
           ],
         ),
+        TopBar(),
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +63,7 @@ class ResultScreen extends StatelessWidget {
           alignment: FractionalOffset.bottomCenter,
           child: MaterialButton(
             padding: EdgeInsets.all(10),
-            minWidth: size.width/2 ,
+            minWidth: size.width / 2,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10),
@@ -76,8 +73,7 @@ class ResultScreen extends StatelessWidget {
             textColor: Colors.white,
             color: Colors.green,
             onPressed: () {
-                Navigator.of(context)
-                        .pushNamed(ChartsDemo.routeName);
+              Navigator.of(context).pushNamed(ChartsDemo.routeName);
             },
             child: Text(
               "View Graph",
