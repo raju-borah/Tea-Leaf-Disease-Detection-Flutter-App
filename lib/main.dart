@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      
       title: 'Leaf Disease Detection',
       theme: ThemeData(
         primarySwatch:Colors.green,
