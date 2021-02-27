@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class ProgressHUD extends StatelessWidget {
-
   final Widget child;
   final bool inAsyncCall;
   final double opacity;
   final Color color;
+  final String str;
   final Animation<Color> valueColor;
 
   ProgressHUD({
@@ -15,6 +16,7 @@ class ProgressHUD extends StatelessWidget {
     this.opacity = 0.3,
     this.color = Colors.grey,
     this.valueColor,
+    this.str="",
   }) : super(key: key);
 
   @override
@@ -28,8 +30,18 @@ class ProgressHUD extends StatelessWidget {
             opacity: opacity,
             child: ModalBarrier(dismissible: false, color: color),
           ),
-          new Center(
-            child: new CircularProgressIndicator()
+          // new Center(
+          //   child: new CircularProgressIndicator()
+          // ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: FadingText('$str',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  )),
+            ),
           ),
         ],
       );
