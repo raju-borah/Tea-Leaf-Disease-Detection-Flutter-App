@@ -36,7 +36,7 @@ class ProgressHUD extends StatelessWidget {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: FadingText('$str',
+              child: JumpingText('$str',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,

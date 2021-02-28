@@ -52,7 +52,7 @@ class _ImageInputState extends State<ImageInput> {
     try {
       var dio = Dio();
       Response response = await dio.post(
-          "http://ec2-52-201-249-232.compute-1.amazonaws.com:8080/uploadfile/",
+          "http://ec2-34-229-212-3.compute-1.amazonaws.com:8080/uploadfile/",
           data: formData);
       // print(response.data);
       _result = response.data;

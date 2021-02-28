@@ -1,6 +1,6 @@
 // import 'dart:convert';
 
-// import 'package:LDDTest/components/barChartOne.dart';
+import 'package:LDDTest/components/barChartOne.dart';
 // import 'package:LDDTest/components/customClipPathComponent.dart';
 // import 'package:LDDTest/components/topBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -106,31 +106,35 @@ class ResultScreen extends StatelessWidget {
             //     child: Text("${detectionScores[0]}"),
             //   ),
             // ),
-            // Align(
-            //   alignment: FractionalOffset.bottomCenter,
-            //   child: MaterialButton(
-            //     padding: EdgeInsets.all(10),
-            //     minWidth: size.width / 2,
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.only(
-            //         topRight: Radius.circular(10),
-            //         topLeft: Radius.circular(10),
-            //       ),
-            //     ),
-            //     textColor: Colors.white,
-            //     color: Colors.green,
-            //     onPressed: () {
-            //       Navigator.of(context).pushNamed(ChartsDemo.routeName);
-            //     },
-            //     child: Text(
-            //       "View Graph",
-            //       style: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 22,
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Spacer(),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: MaterialButton(
+                padding: EdgeInsets.all(10),
+                minWidth: size.width / 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                  ),
+                ),
+                textColor: Colors.white,
+                color: Colors.green,
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(ChartsDemo.routeName, arguments: {
+                    'detection_scores': detectionScores,
+                  });
+                },
+                child: Text(
+                  "View Graph",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+            ),
           ],
         ));
   }
