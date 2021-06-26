@@ -52,7 +52,7 @@ class _ImageInputState extends State<ImageInput> {
     try {
       var dio = Dio();
       Response response = await dio.post(
-          "http://ec2-54-159-185-153.compute-1.amazonaws.com:8080/uploadfile/",
+          "http://ec2-52-205-110-160.compute-1.amazonaws.com:8080/uploadfile/",
           data: formData);
       // print(response.data);
       _result = response.data;
@@ -143,11 +143,10 @@ class _ImageInputState extends State<ImageInput> {
         content: new Text("No Internet Connection!!"),
         actions: <Widget>[
           new FlatButton(
-            child:new Text("Close"),
-            onPressed:(){
-              Navigator.of(context).pop();
-            }
-          )
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              })
         ],
       );
     }
