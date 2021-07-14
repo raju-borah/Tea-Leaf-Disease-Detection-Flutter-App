@@ -1,4 +1,4 @@
-# LDDTest
+# Leaf-Disease-Detection-Flutter-App
 
 A new Flutter project.
 
