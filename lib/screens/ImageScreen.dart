@@ -1,5 +1,4 @@
-import 'package:LDDTest/components/customClipPathComponent.dart';
-import 'package:LDDTest/image_input.dart';
+import 'package:ldd/image_input.dart';
 import 'package:flutter/material.dart';
 
 class ImageScreen extends StatelessWidget {
@@ -8,31 +7,43 @@ class ImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Tea Leaf Disease Detection',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        body: SingleChildScrollView(
+      reverse: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // CustomClipPathComponent(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+            child: IconButton(
+              color: Colors.black,
+              icon: Icon(Icons.arrow_back_rounded),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          reverse: true,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // CustomClipPathComponent(),
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: ImageInput(),
+          Container(
+            child: Center(
+              child: Text(
+                'Tea Leaf Disease Detection',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5
+                    .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
               ),
-            ],
+            ),
           ),
-        ));
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: ImageInput(),
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }

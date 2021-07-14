@@ -1,6 +1,6 @@
 // import 'dart:convert';
 
-import 'package:LDDTest/components/barChartOne.dart';
+import 'package:ldd/components/barChartOne.dart';
 // import 'package:LDDTest/components/customClipPathComponent.dart';
 // import 'package:LDDTest/components/topBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';

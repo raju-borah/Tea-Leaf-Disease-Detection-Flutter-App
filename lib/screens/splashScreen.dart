@@ -1,4 +1,4 @@
-import 'package:LDDTest/screens/homeScreen.dart';
+import 'package:ldd/screens/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -14,9 +14,10 @@ class SplashScreenPage extends StatelessWidget {
         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
       ),
       image: new Image.asset(
-          'assets/images/tealogo.png',
-          height: 500,
-          width: 500,),
+        'assets/images/tealogo.png',
+        height: 500,
+        width: 500,
+      ),
       backgroundColor: Colors.white,
       loaderColor: Theme.of(context).primaryColor,
     );

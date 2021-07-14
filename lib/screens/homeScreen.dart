@@ -1,5 +1,5 @@
-import 'package:LDDTest/screens/ImageScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:ldd/screens/ImageScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ])),
         Expanded(
-          flex: 3,
+          flex: 5,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 30),
             child: Text(

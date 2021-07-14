@@ -1,8 +1,8 @@
-import 'package:LDDTest/components/barChartOne.dart';
-import 'package:LDDTest/screens/ImageScreen.dart';
-import 'package:LDDTest/screens/homeScreen.dart';
-import 'package:LDDTest/screens/resultScreen.dart';
-import 'package:LDDTest/screens/splashScreen.dart';
+import 'package:ldd/components/barChartOne.dart';
+import 'package:ldd/screens/ImageScreen.dart';
+import 'package:ldd/screens/homeScreen.dart';
+import 'package:ldd/screens/resultScreen.dart';
+import 'package:ldd/screens/splashScreen.dart';
 // import 'package:LDDTest/screens/testScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,14 +20,14 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     // full screen
-    // SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Leaf Disease Detection',
       theme: ThemeData(
         primarySwatch: Colors.green,
         accentColor: Colors.green,
-        canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        canvasColor: Color.fromRGBO(255, 255, 255, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
             bodyText1: TextStyle(

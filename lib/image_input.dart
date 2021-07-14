@@ -2,12 +2,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:LDDTest/screens/resultScreen.dart';
+import 'package:ldd/screens/resultScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'DioExceptions.dart';
 import 'ProgressHUD.dart';
 // import 'package:path/path.dart' as path;
@@ -131,6 +130,8 @@ class _ImageInputState extends State<ImageInput> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     if (_isNet) {
       return Stack(
         children: [
@@ -160,12 +161,10 @@ class _ImageInputState extends State<ImageInput> {
   Widget _uiSetup(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          width: 200,
-          height: 200,
+          width: 250,
+          height: 250,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -177,7 +176,7 @@ class _ImageInputState extends State<ImageInput> {
                         offset: Offset(0, 10),
                         blurRadius: 50,
                         color: Theme.of(context).primaryColor.withOpacity(0.23),
-                        spreadRadius: 10.0,
+                        spreadRadius: 1.0,
                       ),
                     ],
                   ),
@@ -192,16 +191,16 @@ class _ImageInputState extends State<ImageInput> {
                   ),
                 )
               : Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 10),
-                        blurRadius: 50,
-                        color: Theme.of(context).primaryColor.withOpacity(0.23),
-                        spreadRadius: 10.0,
-                      ),
-                    ],
-                  ),
+                  // decoration: BoxDecoration(
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       offset: Offset(0, 1),
+                  //       blurRadius: 90,
+                  //       color: Theme.of(context).primaryColor.withOpacity(.51),
+                  //       spreadRadius: .13,
+                  //     ),
+                  //   ],
+                  // ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(150),
                     child: Image.asset(
@@ -245,112 +244,106 @@ class _ImageInputState extends State<ImageInput> {
               ),
               keyboardType: TextInputType.number),
         ),
-        Container(
-          child: Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Row(
-              children: [
-                if (_storedImage == null)
-                  Expanded(
-                    child: FlatButton.icon(
-                      minWidth: size.width,
-                      icon: Icon(Icons.camera_alt_rounded),
-                      label: Text(
-                        'Open Camera',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                        ),
-                      ),
-                      textColor: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        _showPicker(context);
-                      },
-                    ),
-                  )
-                else
-                  Expanded(
-                    child: FlatButton.icon(
-                      minWidth: size.width / 2,
-                      icon: Icon(Icons.camera),
-                      label: Text(
-                        'Open Camera',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                        ),
-                      ),
-                      textColor: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        _showPicker(context);
-                      },
+        Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: Column(
+            children: [
+              if (_storedImage == null)
+                FlatButton.icon(
+                  minWidth: size.width,
+                  icon: Icon(Icons.camera_alt_rounded),
+                  label: Text(
+                    'Open Camera',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
                     ),
                   ),
-                if (_storedImage != null)
-                  MaterialButton(
-                    padding: EdgeInsets.all(10),
+                  textColor: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    _showPicker(context);
+                  },
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: FlatButton.icon(
                     minWidth: size.width / 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        topLeft: Radius.circular(10),
-                      ),
-                    ),
-                    textColor: Colors.white,
-                    color: Colors.green,
-                    onPressed: () {
-                      setState(() {
-                        thresholdValue.text.isEmpty
-                            ? _validateThresholdValue = true
-                            : _validateThresholdValue = false;
-                        noOfBoxes.text.isEmpty
-                            ? _validateNoOfBoxes = true
-                            : _validateNoOfBoxes = false;
-                        if (_validateThresholdValue == false &&
-                            _validateNoOfBoxes == false) {
-                          checkInternet().then((value) {
-                            if (_isNet) {
-                              uploadImage(_storedImage).then((value) {
-                                setState(() {
-                                  isApiCallProcess = false;
-                                });
-                                if (_result != null) {
-                                  setState(() {
-                                    isApiCallProcess = false;
-                                  });
-
-                                  // print(_result.values.toList());
-                                  Navigator.of(context).pushNamed(
-                                      ResultScreen.routeName,
-                                      arguments: {
-                                        // 'image': _storedImage,
-                                        'detection_scores':
-                                            _result.values.toList()[0],
-                                        'filename': _result.values.toList()[1],
-                                      });
-                                  print('Done ...');
-                                }
-                              });
-                            } else {
-                              setState(() {
-                                _isNet = false;
-                              });
-                              print('here');
-                            }
-                          });
-                        }
-                      });
-                    },
-                    child: Text(
-                      "Check Now",
+                    icon: Icon(Icons.camera),
+                    label: Text(
+                      'Open Camera',
                       style: TextStyle(
-                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                         fontSize: 22,
                       ),
                     ),
+                    textColor: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      _showPicker(context);
+                    },
                   ),
-              ],
-            ),
+                ),
+              if (_storedImage != null)
+                MaterialButton(
+                  padding: EdgeInsets.all(20),
+                  minWidth: size.width / 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {
+                    setState(() {
+                      thresholdValue.text.isEmpty
+                          ? _validateThresholdValue = true
+                          : _validateThresholdValue = false;
+                      noOfBoxes.text.isEmpty
+                          ? _validateNoOfBoxes = true
+                          : _validateNoOfBoxes = false;
+                      if (_validateThresholdValue == false &&
+                          _validateNoOfBoxes == false) {
+                        checkInternet().then((value) {
+                          if (_isNet) {
+                            uploadImage(_storedImage).then((value) {
+                              setState(() {
+                                isApiCallProcess = false;
+                              });
+                              if (_result != null) {
+                                setState(() {
+                                  isApiCallProcess = false;
+                                });
+
+                                // print(_result.values.toList());
+                                Navigator.of(context).pushNamed(
+                                    ResultScreen.routeName,
+                                    arguments: {
+                                      // 'image': _storedImage,
+                                      'detection_scores':
+                                          _result.values.toList()[0],
+                                      'filename': _result.values.toList()[1],
+                                    });
+                                print('Done ...');
+                              }
+                            });
+                          } else {
+                            setState(() {
+                              _isNet = false;
+                            });
+                            print('here');
+                          }
+                        });
+                      }
+                    });
+                  },
+                  child: Text(
+                    "Check Now",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
       ],
