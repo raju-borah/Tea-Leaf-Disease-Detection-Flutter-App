@@ -6,6 +6,8 @@ import 'package:ldd/components/barChartOne.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 // import 'package:progress_indicators/progress_indicators.dart';
 class ResultScreen extends StatelessWidget {
   static const routeName = '/result-screen';
@@ -14,11 +16,15 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final routeArgs = ModalRoute.of(context).settings.arguments as Map;
-    final filename = routeArgs['filename'];
-    final detectionScores = routeArgs['detection_scores'];
+    final ssdImageName = routeArgs['ssd_image_name'];
+    final fasterImageName = routeArgs['faster_image_name'];
+    final ssdScores = routeArgs['ssd_scores'];
+    final fasterRcnnScores = routeArgs['faster_rcnn_scores'];
+    print(ssdImageName);
+    print(fasterImageName);
+    print(ssdScores);
+    print(fasterRcnnScores);
 
-    print("This is result data");
-    print(detectionScores);
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -29,43 +35,25 @@ class ResultScreen extends StatelessWidget {
           ),
           toolbarHeight: 75,
         ),
-        body: Column(
+        body: ListView(
           // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // CustomClipPathComponent(),
-            // Row(
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-            //       child: IconButton(
-            //         color: Theme.of(context).primaryColorLight,
-            //         icon: Icon(Icons.arrow_back_rounded),
-            //         onPressed: () {
-            //           Navigator.pop(context);
-            //         },
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // TopBar(),
-            // Center(
-            //   child:
-            if (detectionScores != null)
+            if (ssdScores != null && fasterRcnnScores != null)
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
                   width: size.width,
                   child: Center(
                     child: Text(
-                      "Spot Detected",
+                      "Disease Detected",
                       style: Theme.of(context).textTheme.headline5.copyWith(
                           color: Colors.red, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
-            if (detectionScores == null)
+            if (ssdScores == null && fasterRcnnScores == null)
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
@@ -83,17 +71,22 @@ class ResultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://tealeavesspotdata.s3.amazonaws.com/$filename.jpg",
-                      placeholder: (context, url) =>
-                          new CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: CachedNetworkImage(
+                    imageUrl: kImageUrl + '$ssdImageName',
+                    placeholder: (context, url) =>
+                        new CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: CachedNetworkImage(
+                    imageUrl: kImageUrl + '$fasterImageName',
+                    placeholder: (context, url) =>
+                        new CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
                   ),
                 ),
               ],
@@ -123,7 +116,8 @@ class ResultScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context)
                       .pushNamed(ChartsDemo.routeName, arguments: {
-                    'detection_scores': detectionScores,
+                    'ssd_scores': ssdScores,
+                    'faster_rcnn_scores': fasterRcnnScores,
                   });
                 },
                 child: Text(
