@@ -1,6 +1,7 @@
 import 'package:ldd/components/barChartOne.dart';
 import 'package:ldd/screens/ImageScreen.dart';
 import 'package:ldd/screens/homeScreen.dart';
+import 'package:ldd/screens/imageCard.dart';
 import 'package:ldd/screens/resultScreen.dart';
 import 'package:ldd/screens/splashScreen.dart';
 // import 'package:LDDTest/screens/testScreen.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         ResultScreen.routeName: (ctx) => ResultScreen(),
         ImageScreen.routeName: (ctx) => ImageScreen(),
         ChartsDemo.routeName: (ctx) => ChartsDemo(),
+        ImageCard.routeName: (ctx) => ImageCard(),
         // TestScreen.routeName: (ctx) => TestScreen(),
       },
     );

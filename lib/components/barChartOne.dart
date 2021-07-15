@@ -28,7 +28,8 @@ class ChartsDemoState extends State<ChartsDemo> {
       List<PredictData> desktopSalesData = [];
 
       for (var i = 0; i < detectionScores.length; i++) {
-        desktopSalesData.add(PredictData('Spot ${i + 1}', detectionScores[i]));
+        desktopSalesData
+            .add(PredictData('Disease ${i + 1}', detectionScores[i]));
       }
 
       return [
