@@ -5,10 +5,14 @@ import 'package:ldd/screens/imageCard.dart';
 
 class CardRow extends StatelessWidget {
   CardRow(
-      {@required this.imageName, @required this.modal, @required this.scores});
+      {@required this.imageName,
+      @required this.modal,
+      @required this.scores,
+      @required this.classes});
   final imageName;
   final modal;
   final scores;
+  final classes;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +25,15 @@ class CardRow extends StatelessWidget {
               Navigator.pushNamed(context, ImageCard.routeName, arguments: {
                 'img': imageName,
                 'modal': modal,
-                'scores': scores
+                'scores': scores,
+                'classes': classes,
               });
             },
             child: Hero(
               tag: 'image-card-$modal',
               child: CachedNetworkImage(
+                height: 200,
+                width: 200,
                 imageUrl: kImageUrl + '$imageName',
                 placeholder: (context, url) => new CircularProgressIndicator(),
                 errorWidget: (context, url, error) => new Icon(Icons.error),

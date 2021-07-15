@@ -12,6 +12,8 @@ class ResultScreen extends StatelessWidget {
     final fasterImageName = routeArgs['faster_image_name'];
     final ssdScores = routeArgs['ssd_scores'];
     final fasterRcnnScores = routeArgs['faster_rcnn_scores'];
+    final ssdClasses = routeArgs['ssd_classes'];
+    final fasterRcnnClasses = routeArgs['faster_rcnn_classes'];
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -59,6 +61,7 @@ class ResultScreen extends StatelessWidget {
                   imageName: ssdImageName,
                   modal: "SSD",
                   scores: ssdScores,
+                  classes: ssdClasses,
                 ),
                 Divider(
                   color: Colors.green,
@@ -67,6 +70,7 @@ class ResultScreen extends StatelessWidget {
                   imageName: fasterImageName,
                   modal: "Faster RCNN",
                   scores: fasterRcnnScores,
+                  classes: fasterRcnnClasses,
                 ),
               ],
             ),

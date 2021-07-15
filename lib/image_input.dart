@@ -48,41 +48,37 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       isApiCallProcess = true;
     });
-    // String fileName = file.path.split('/').last;
-    // FormData formData = FormData.fromMap({
-    //   "file": await MultipartFile.fromFile(file.path, filename: fileName),
-    //   "thresh": thresholdValue.text,
-    //   "boxes": noOfBoxes.text,
-    // });
-    // try {
-    //   var dio = Dio();
-    //   Response response = await dio.post(
-    //     kUrl,
-    //     data: formData,
-    //     options: Options(
-    //       followRedirects: false,
-    //       validateStatus: (status) {
-    //         return status < 500;
-    //       },
-    //     ),
-    //   );
-    //   print("response");
-    //   _result = response.data;
-    //   // print(response.data);
-    // } on DioError catch (e) {
-    //   // The request was made and the server responded with a status code
-    //   // that falls out of the range of 2xx and is also not 304.
-    //   if (e.response != null) {
-    //     print(e.response.data);
-    //     print(e.response.headers);
-    //   } else {
-    //     // Something happened in setting up or sending the request that triggered an Error
-    //     print(e.message);
-    //   }
-    // }
-    _result = {
-      "ssd": [1]
-    };
+    String fileName = file.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(file.path, filename: fileName),
+      "thresh": thresholdValue.text,
+      "boxes": noOfBoxes.text,
+    });
+    try {
+      var dio = Dio();
+      Response response = await dio.post(
+        kUrl,
+        data: formData,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          },
+        ),
+      );
+      print("response");
+      _result = response.data;
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print(e.response.data);
+        print(e.response.headers);
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.message);
+      }
+    }
     return _result;
   }
 
@@ -321,6 +317,7 @@ class _ImageInputState extends State<ImageInput> {
                       noOfBoxes.text.isEmpty
                           ? _validateNoOfBoxes = true
                           : _validateNoOfBoxes = false;
+
                       if (_validateThresholdValue == false &&
                           _validateNoOfBoxes == false) {
                         checkInternet().then((value) {
@@ -333,38 +330,22 @@ class _ImageInputState extends State<ImageInput> {
                                 setState(() {
                                   isApiCallProcess = false;
                                 });
-                                // print(_result.values.toList());
                                 Navigator.of(context).pushNamed(
                                     ResultScreen.routeName,
                                     arguments: {
-                                      // 'image': _storedImage,
-                                      // "ssd_scores": _result.values.toList()[0],
-                                      // "faster_rcnn_scores":
-                                      //     _result.values.toList()[1],
-                                      // "ssd_image_name":
-                                      //     _result.values.toList()[2],
-                                      // 'faster_image_name':
-                                      //     _result.values.toList()[3]
-                                      "ssd_scores": [
-                                        53.97,
-                                        53.69,
-                                        45.69,
-                                        44.59,
-                                        40.57
-                                      ],
-                                      "faster_rcnn_scores": [
-                                        97.0,
-                                        82.55,
-                                        80.22,
-                                        54.82,
-                                        25.05
-                                      ],
+                                      'image': _storedImage,
+                                      "ssd_scores": _result.values.toList()[0],
+                                      "faster_rcnn_scores":
+                                          _result.values.toList()[1],
                                       "ssd_image_name":
-                                          "predictions/4aede4fe-e53e-11eb-a537-0ae060310013-ssd-prediction.jpg",
+                                          _result.values.toList()[2],
                                       'faster_image_name':
-                                          "predictions/51102446-e53e-11eb-a537-0ae060310013-faster_rcnn-prediction.jpg"
+                                          _result.values.toList()[3],
+                                      "ssd_classes": _result.values.toList()[4],
+                                      "faster_rcnn_classes":
+                                          _result.values.toList()[5],
                                     });
-                                print('Done ...');
+                                print('input page Done ...');
                               }
                             });
                           } else {

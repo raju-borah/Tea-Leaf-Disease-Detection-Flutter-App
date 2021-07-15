@@ -12,6 +12,7 @@ class ImageCard extends StatelessWidget {
     final imageName = routeArgs['img'];
     final modal = routeArgs['modal'];
     final scores = routeArgs['scores'];
+    final classes = routeArgs['classes'];
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -75,6 +76,7 @@ class ImageCard extends StatelessWidget {
                   Navigator.of(context)
                       .pushNamed(ChartsDemo.routeName, arguments: {
                     'detection_scores': scores,
+                    'classes': classes,
                   });
                 },
                 child: Text(

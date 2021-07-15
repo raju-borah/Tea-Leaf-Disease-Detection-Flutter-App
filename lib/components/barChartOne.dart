@@ -21,15 +21,30 @@ class ChartsDemoState extends State<ChartsDemo> {
   Widget build(BuildContext context) {
     final routeArgs = ModalRoute.of(context).settings.arguments as Map;
     final detectionScores = routeArgs['detection_scores'];
+    final classes = routeArgs['classes'];
 
     List<charts.Series> seriesList;
 
     List<charts.Series<PredictData, String>> data() {
       List<PredictData> desktopSalesData = [];
 
+      int helo = 0;
+      int redSipder = 0;
+      int redRust = 0;
       for (var i = 0; i < detectionScores.length; i++) {
-        desktopSalesData
-            .add(PredictData('Disease ${i + 1}', detectionScores[i]));
+        if (classes[i] == 1) {
+          desktopSalesData
+              .add(PredictData('Helopeltis ${helo + 1}', detectionScores[i]));
+          helo++;
+        } else if (classes[i] == 2) {
+          desktopSalesData.add(PredictData(
+              'Red spider mite ${redSipder + 1}', detectionScores[i]));
+          redSipder++;
+        } else {
+          desktopSalesData
+              .add(PredictData('Red rust ${redRust + 1}', detectionScores[i]));
+          redRust++;
+        }
       }
 
       return [
