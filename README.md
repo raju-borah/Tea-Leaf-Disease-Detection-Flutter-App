@@ -1,7 +1,8 @@
 # Leaf-Disease-Detection-Flutter-App
 
-#An Flutter app that will detect Three types of diseases namely Helopeltis, Red Spider Mite and Red Rust.
-#This application is using Dio package to Make Api calls.
+An Flutter app that will detect Three types of diseases namely Helopeltis, Red Spider Mite and Red Rust.
+
+This application is using Dio package to Make Api calls.
 
 ## Getting Started
 
