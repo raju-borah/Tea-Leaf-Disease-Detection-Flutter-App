@@ -6,11 +6,11 @@ This application is using Dio package to Make Api calls.
 
 ## Demo
 
-![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-1.jpg | width=100)
-![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-2.jpg | width=100)
-![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-3.jpg | width=100)
-![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-4.jpg | width=100)
-![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-5.jpg | width=100)
+![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-1.jpg)
+![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-2.jpg)
+![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-3.jpg)
+![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-4.jpg)
+![](https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-5.jpg )
 
 ## Getting Started
 
