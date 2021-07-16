@@ -86,9 +86,6 @@ class _ImageInputState extends State<ImageInput> {
         // Something happened in setting up or sending the request that triggered an Error
         print(e.message);
       }
-    } catch (e) {
-      print("12121");
-      return _result == 2;
     }
     return _result;
   }
