@@ -5,11 +5,11 @@ An Flutter app that will detect Three types of diseases namely Helopeltis, Red S
 This application is using Dio package to Make Api calls.
 
 ## Demo
- <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-1.jpg" width="100" >
- <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-2.jpg" width="100" >
- <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-3.jpg" width="100" >
- <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-4.jpg" width="100" >
- <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-5.jpg" width="100" >
+ <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-1.jpg" width="200" >
+ <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-2.jpg" width="200" >
+ <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-3.jpg" width="200" >
+ <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-4.jpg" width="200" >
+ <img src="https://github.com/raju-borah/Tea-Leaf-Disease-Detection-Flutter-App/blob/master/screen-5.jpg" width="200" >
 
 
 ## Getting Started
