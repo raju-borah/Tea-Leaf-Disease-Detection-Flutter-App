@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String compute = "ec2-54-210-114-184.compute-1.amazonaws.com";
+String compute = "ec2-54-167-126-112.compute-1.amazonaws.com";
 String kBaseUrl = "http://$compute:8080/docs/";
 String kUrl = "http://$compute:8080/uploadfile/";
 String kImageUrl = "https://tea-object-detection-results.s3.amazonaws.com/";

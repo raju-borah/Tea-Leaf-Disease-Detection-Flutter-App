@@ -155,16 +155,21 @@ class _ImageInputState extends State<ImageInput> {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     if (_result == 2) {
-      return AlertDialog(
-        title: new Text("Alert"),
-        content: new Text("Connection Error server not working!!"),
-        actions: <Widget>[
-          TextButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              })
-        ],
+      return Expanded(
+        child: Container(
+          color: Colors.green,
+          child: AlertDialog(
+            title: new Text("Alert"),
+            content: new Text("Connection Error server not working!!"),
+            actions: <Widget>[
+              TextButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+            ],
+          ),
+        ),
       );
     }
     if (_isNet) {
@@ -173,7 +178,7 @@ class _ImageInputState extends State<ImageInput> {
           child: ProgressHUD(
             child: _uiSetup(context),
             inAsyncCall: isApiCallProcess,
-            opacity: 0.31,
+            opacity: 0.71,
             str: "Checking Leaf Sample",
             color: Colors.black,
           ),
