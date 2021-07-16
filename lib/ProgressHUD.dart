@@ -16,7 +16,7 @@ class ProgressHUD extends StatelessWidget {
     this.opacity = 0.3,
     this.color = Colors.grey,
     this.valueColor,
-    this.str="",
+    this.str = "",
   }) : super(key: key);
 
   @override
@@ -30,18 +30,15 @@ class ProgressHUD extends StatelessWidget {
             opacity: opacity,
             child: ModalBarrier(dismissible: false, color: color),
           ),
-          // new Center(
-          //   child: new CircularProgressIndicator()
-          // ),
+          // new Center(child: new CircularProgressIndicator()),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: JumpingText('$str',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.white
-                  )),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.white)),
             ),
           ),
         ],
