@@ -48,14 +48,18 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       isApiCallProcess = true;
     });
-    String fileName = file.path.split('/').last;
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(file.path, filename: fileName),
-      "thresh": thresholdValue.text,
-      "boxes": noOfBoxes.text,
-    });
+
     try {
+      String fileName = file.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(file.path, filename: fileName),
+        "thresh": thresholdValue.text,
+        "boxes": noOfBoxes.text,
+      });
       var dio = Dio();
+      // dio.options.baseUrl = kBaseUrl;
+      // dio.options.connectTimeout = 3000; //1min
+      // dio.options.receiveTimeout = 60000;
       Response response = await dio.post(
         kUrl,
         data: formData,
@@ -66,7 +70,6 @@ class _ImageInputState extends State<ImageInput> {
           },
         ),
       );
-      print("response");
       _result = response.data;
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
@@ -74,10 +77,18 @@ class _ImageInputState extends State<ImageInput> {
       if (e.response != null) {
         print(e.response.data);
         print(e.response.headers);
+      } else if (e.type == DioErrorType.other) {
+        print("Connection  error");
+        setState(() {
+          _result = 2;
+        });
       } else {
         // Something happened in setting up or sending the request that triggered an Error
         print(e.message);
       }
+    } catch (e) {
+      print("12121");
+      return _result == 2;
     }
     return _result;
   }
@@ -86,7 +97,6 @@ class _ImageInputState extends State<ImageInput> {
     // ignore: deprecated_member_use
     final imageFile = await picker.getImage(
       source: ImageSource.camera,
-      // maxWidth: 200,
     );
     // final appDir = await syspaths.getApplicationDocumentsDirectory();
     // final fileName = path.basename(imageFile.path);
@@ -147,6 +157,19 @@ class _ImageInputState extends State<ImageInput> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
+    if (_result == 2) {
+      return AlertDialog(
+        title: new Text("Alert"),
+        content: new Text("Connection Error server not working!!"),
+        actions: <Widget>[
+          TextButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              })
+        ],
+      );
+    }
     if (_isNet) {
       return Row(children: [
         Expanded(
@@ -311,12 +334,23 @@ class _ImageInputState extends State<ImageInput> {
                   color: Colors.green,
                   onPressed: () {
                     setState(() {
-                      thresholdValue.text.isEmpty
-                          ? _validateThresholdValue = true
-                          : _validateThresholdValue = false;
-                      noOfBoxes.text.isEmpty
-                          ? _validateNoOfBoxes = true
-                          : _validateNoOfBoxes = false;
+                      if (thresholdValue.text.isEmpty) {
+                        _validateThresholdValue = true;
+                      } else if (double.parse(thresholdValue.text) >= 0.1 &&
+                          double.parse(thresholdValue.text) <= 0.9) {
+                        _validateThresholdValue = false;
+                      } else {
+                        _validateThresholdValue = true;
+                      }
+
+                      if (noOfBoxes.text.isEmpty) {
+                        _validateNoOfBoxes = true;
+                      } else if (double.parse(noOfBoxes.text) >= 5 &&
+                          double.parse(noOfBoxes.text) <= 50) {
+                        _validateNoOfBoxes = false;
+                      } else {
+                        _validateNoOfBoxes = true;
+                      }
 
                       if (_validateThresholdValue == false &&
                           _validateNoOfBoxes == false) {
